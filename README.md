@@ -20,7 +20,7 @@ Simple example of the client-server pattern using ZeroMQ
 
 ### Next, configure the IP address and port number of the server's machine in the const.py file
 
-Note: Make sure that this repo is cloned in all the machines used for this experiment.
+Note: Make sure that this repo is cloned in all the machines used for this experiment. (Se estiver testando localmente, pode usar `HOST = "127.0.0.1"` no `const.py`).
 
 ### Then, run the client and server:
 
@@ -28,10 +28,39 @@ On the machine for which the IP address was configured:
 
     python3 server.py
 
-On another machine:
+On another machine (or in another terminal, if testing locally):
 
     python3 client.py
 
 ### Now, add other services (operations) in the server and call them from the client.
 
-    
+---
+
+### Novas Funcionalidades Implementadas
+
+O servidor foi modificado para ir além de um simples "eco". Ele agora funciona como um servidor de operações, capaz de processar diferentes tipos de requisições com base em um protocolo simples.
+
+**Protocolo:**
+
+As mensagens do cliente para o servidor devem seguir o formato:
+`OPERACAO|ARGUMENTO1|ARGUMENTO2|...`
+
+O servidor processa a `OPERACAO` e retorna o resultado como uma string.
+
+**Operações Adicionadas:**
+
+1.  **ADD (Adição)**
+    * **Formato:** `ADD|num1|num2`
+    * **Descrição:** Soma dois números (`num1` e `num2`).
+    * **Exemplo de Resposta:** `42`
+
+2.  **UPPER (Maiúsculas)**
+    * **Formato:** `UPPER|texto`
+    * **Descrição:** Converte a string `texto` para letras maiúsculas.
+    * **Exemplo de Resposta:** `OLÁ, MUNDO`
+
+3.  **STOP (Parar)**
+    * **Formato:** `STOP`
+    * **Descrição:** Instrui o servidor a encerrar sua execução.
+
+O `client.py` foi atualizado para demonstrar a chamada dessas duas novas operações (`ADD` e `UPPER`) antes de enviar o comando `STOP`.
